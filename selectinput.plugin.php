@@ -5,14 +5,14 @@
  */
 if ($modx->event->name == 'ContentBlocks_RegisterInputs') {
     // Load your own class. No need to require cbBaseInput, that's already loaded.
-    $path = $modx->getOption('classselectinput.core_path', null, MODX_CORE_PATH . 'components/classselectinput/');
-    require_once($path . 'elements/inputs/classselectinput.class.php');
+    $path = $modx->getOption('selectinput.core_path', null, MODX_CORE_PATH . 'components/selectinput/');
+    require_once($path . 'elements/inputs/selectinput.class.php');
     
     // Create an instance of your input type, passing the $contentBlocks var
-    $instance = new ClassSelectInput($contentBlocks);
+    $instance = new SelectInput($contentBlocks);
     
     // Pass back your input reference as key, and the instance as value
     $modx->event->output(array(
-        'classselectinput' => $instance
+        'selectinput' => $instance
     ));
 }
