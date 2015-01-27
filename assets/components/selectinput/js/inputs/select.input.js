@@ -3,19 +3,23 @@
     // Add your custom input to the fieldTypes object as a function
     // The dom variable contains the injected field (from the template)
     // and the data variable contains field information, properties etc.
-    ContentBlocks.fieldTypes.classselectinput = function(dom, data) {
+    ContentBlocks.fieldTypes.selectinput = function(dom, data) {
         var input = {};
 
         input.init = function () {
             // Generate the heading dropdown based on field configuration
             var avl = data.properties.class_options || "",
-                select = dom.find('.contentblocks-field-classselect select');
+                select = dom.find('.contentblocks-field-select select');
+            
+            // make a blank option at the top. though this disables the ability to make it required (in an obvious way)
+            select.append('<option value=""></option>');
 
-            avl = avl.split(',');
+            avl = avl.split('\n');
             $.each(avl, function(i, lvl) {
                 lvl = lvl.split('=');
-                var val = _('classselectinput.' + lvl[1]) || lvl[1];
-                select.append('<option value="' + lvl[0] + '">' + val + '</option>');
+                var disp = _('selectinput.' + lvl[0]) || lvl[0],
+                    val  = lvl[1] || lvl[0];
+                select.append('<option value="' + val + '">' + disp + '</option>');
             });
 
 
@@ -23,15 +27,20 @@
                 select.val(data.value);
             }
             else {
-                var def = data.properties.default_class || 'None';
+                var def = data.properties.default_class || '';
                 select.val(def);
             }
 
         };
 
         input.getData = function () {
+            var selected = dom.find('.contentblocks-field-select select option:selected'),
+                value = selected.val(),
+                display = selected.text();
+                
             return {
-                value: dom.find('.contentblocks-field-classselect select').val()
+                value: value,
+                display: display                
             };
         };
 
