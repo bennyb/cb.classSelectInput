@@ -27,7 +27,7 @@
                 select.val(data.value);
             }
             else {
-                var def = data.properties.default_class || '';
+                var def = data.properties.default_value || '';
                 select.val(def);
             }
 
@@ -46,7 +46,7 @@
 
         input.confirmBeforeDelete = function() {
             var inputData = input.getData(),
-            hasClass = inputData.value != data.properties.default_class
+            hasClass = inputData.value != data.properties.default_value
             return hasClass;
         };
 
